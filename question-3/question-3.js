@@ -8,10 +8,14 @@ function deleteLogs() {
         console.log("Directory does not exist")
     } else {
         process.chdir(dir)
-        const logs = fs.readdirSync(dir)
-        logs.forEach(function (log) {
-            fs.unlink(log, console.log(`deleted files...${log}`))
-        })
+        for (i = 1; i <= 10; i++) {
+            fs.unlink(`log${i}.txt`, function (err) {
+                if (err) throw err;
+            })
+            console.log(`deleted files...log${i}.txt`);
+        }
+        process.chdir('../')
+        fs.rmdirSync(dir)
     }
 }
 //deleteLogs();
@@ -21,7 +25,7 @@ function createLogs() {
         fs.mkdirSync(dir);
         process.chdir(dir)
         for (i = 1; i <= 10; i++) {
-            fs.writeFile(`log${i}`, `This is log ${i}`,
+            fs.writeFile(`log${i}.txt`, `This is log ${i}`,
                 console.log(`log${i}.txt`), function (err) {
                     if (err) throw err;
                 })
